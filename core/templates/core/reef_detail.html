@@ -1,0 +1,147 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ reef.name }} - ReefGuard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'reef_list' %}">Reefs</a></li>
+            <li class="breadcrumb-item active">{{ reef.name }}</li>
+        </ol>
+    </nav>
+
+    <!-- Reef Header -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <h1><i class="bi bi-pin-map-fill"></i> {{ reef.name }}</h1>
+            <p class="lead text-muted">{{ reef.country }} - {{ reef.get_region_display }} Region</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <span class="badge
+                {% if reef.health_status == 'excellent' %}bg-success
+                {% elif reef.health_status == 'good' %}bg-info
+                {% elif reef.health_status == 'fair' %}bg-warning
+                {% elif reef.health_status == 'poor' %}bg-danger
+                {% else %}bg-dark{% endif %} fs-5">
+                {{ reef.get_health_status_display }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Reef Details -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Description</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{ reef.description }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Specifications</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <strong><i class="bi bi-arrows-expand"></i> Area:</strong>
+                            <span>{{ reef.area_km2 }} km²</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong><i class="bi bi-water"></i> Average Depth:</strong>
+                            <span>{{ reef.depth_meters }} meters</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong><i class="bi bi-geo"></i> Latitude:</strong>
+                            <span>{{ reef.latitude }}°</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong><i class="bi bi-geo"></i> Longitude:</strong>
+                            <span>{{ reef.longitude }}°</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Events -->
+            {% if events %}
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent Events</h5>
+                    <a href="{% url 'event_list' %}?reef={{ reef.pk }}" class="btn btn-sm btn-reef">View All</a>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for event in events %}
+                    <a href="{% url 'event_detail' event.pk %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-1">{{ event.title }}</h6>
+                            <small>{{ event.event_date }}</small>
+                        </div>
+                        <p class="mb-1 small">{{ event.get_event_type_display }}</p>
+                        <span class="badge
+                            {% if event.severity == 'critical' %}bg-danger
+                            {% elif event.severity == 'high' %}bg-warning
+                            {% elif event.severity == 'medium' %}bg-info
+                            {% else %}bg-secondary{% endif %}">
+                            {{ event.get_severity_display }}
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">Quick Actions</h6>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'report_pollution' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-exclamation-triangle"></i> Report Pollution
+                    </a>
+                    <a href="{% url 'report_sighting' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-binoculars"></i> Report Sighting
+                    </a>
+                    <a href="{% url 'upload_media' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-camera"></i> Upload Media
+                    </a>
+                </div>
+            </div>
+
+            <!-- Gallery Preview -->
+            {% if gallery_items %}
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Gallery</h6>
+                    <a href="{% url 'gallery' %}?reef={{ reef.pk }}" class="btn btn-sm btn-reef">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        {% for item in gallery_items|slice:":4" %}
+                        <div class="col-6">
+                            <div class="ratio ratio-1x1 bg-light rounded">
+                                {% if item.media_type == 'photo' %}
+                                    <i class="bi bi-image text-muted" style="font-size: 2rem; display: flex; align-items: center; justify-content: center;"></i>
+                                {% else %}
+                                    <i class="bi bi-play-circle text-muted" style="font-size: 2rem; display: flex; align-items: center; justify-content: center;"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
