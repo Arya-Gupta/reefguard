@@ -66,3 +66,18 @@ class EventListView(ListView):
         context['current_filters'] = self.request.GET
         context['current_sort'] = self.request.GET.get('sort', '-event_date')
         return context
+
+class CustomPasswordResetView(PasswordResetView):
+    """
+    Password reset request view.
+    """
+    template_name = 'core/password_reset.html'
+    email_template_name = 'core/password_reset_email.html'
+    success_url = reverse_lazy('password_reset_done')
+ 
+    def form_valid(self, form):
+        messages.info(
+            self.request,
+            'Password reset email has been sent if the email exists in our system.'
+        )
+        return super().form_valid(form)
