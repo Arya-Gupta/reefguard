@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ article.title }} - ReefGuard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'article_list' %}">Articles</a></li>
+            <li class="breadcrumb-item active">{{ article.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <article>
+                <!-- Article Header -->
+                <div class="mb-4">
+                    <span class="badge bg-primary mb-2">{{ article.get_category_display }}</span>
+                    {% if article.featured %}
+                        <span class="badge bg-warning text-dark mb-2"><i class="bi bi-star-fill"></i> Featured</span>
+                    {% endif %}
+                    <h1 class="mt-2">{{ article.title }}</h1>
+                    <div class="text-muted">
+                        <i class="bi bi-person"></i> By {{ article.author.username|default:"ReefGuard Staff" }}
+                        <span class="ms-3"><i class="bi bi-calendar"></i> {{ article.created_at|date:"F d, Y" }}</span>
+                    </div>
+                </div>
+
+                <!-- Article Content -->
+                <div class="article-content">
+                    {{ article.content|linebreaks }}
+                </div>
+            </article>
+
+            <!-- Back to Articles -->
+            <div class="mt-5">
+                <a href="{% url 'article_list' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Articles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
