@@ -35,7 +35,36 @@ from .forms import (
 from .decorators import (
     RoleRequiredMixin, AdminRequiredMixin, ResearcherOrAdminMixin
 )
-
+class PollutionReportCreateView(LoginRequiredMixin, CreateView):
+    """
+    Form view for submitting pollution reports.
+    """
+    model = Event
+    form_class = PollutionReportForm
+    template_name = 'core/pollution_report_form.html'
+    success_url = reverse_lazy('event_list')
+ 
+    def form_valid(self, form):
+        form.instance.reported_by = self.request.user
+        form.instance.event_type = 'pollution'
+        messages.success(
+            self.request,
+            'Pollution report submitted successfully. Thank you!'
+        )
+        return super().form_valid(form)
+class EventDetailView(DetailView):
+    """
+    Detail view for individual event.
+    """
+    model = Event
+    template_name = 'core/event_detail.html'
+    context_object_name = 'event'
+ 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event = self.get_object()
+        context['gallery_items'] = event.gallery_items.all()
+        return context
 class HomeView(TemplateView):
     """Home page view with featured content and recent activity."""
     template_name = 'core/home.html'
