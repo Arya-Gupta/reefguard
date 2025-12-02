@@ -1,37 +1,46 @@
 # ReefGuard - Coral Reef Monitoring & Restoration Platform
-<img width="800" height="400" alt="Gemini_Generated_Image_sxw3vesxw3vesxw3" src="https://github.com/user-attachments/assets/3afc5ae5-4c27-4e11-a546-921f1d992ad3" />
+<img width="1000" height="400" alt="Gemini_Generated_Image_sxw3vesxw3vesxw3" src="https://github.com/user-attachments/assets/8451b044-6c2f-4d0d-8e97-9cf330e2270c" />
+
 
 ReefGuard is a Django-based web application for monitoring and protecting coral reefs worldwide. The platform enables researchers, students, and conservationists to track reef health, report pollution incidents, share coral sightings, and contribute to global reef conservation efforts.
+## 📖 About The Project
 
-## 🚀 Quick Start
+**ReefGuard** is a Django-based web application designed to monitor and protect coral reefs worldwide. The platform enables researchers, students, and conservationists to track reef health, report pollution incidents, share coral sightings, and contribute to global reef conservation efforts.
 
-### Automated Setup (Linux/Mac) - Recommended
-```bash
-cd ReefGuard
-source ../venv/bin/activate  # Activate virtual environment
-./setup.sh                   # Run setup script (interactive)
-```
+[cite_start]Our goal is to raise awareness and highlight coral restoration efforts through an interactive and community-driven platform[cite: 16].
 
-### Reset & Fresh Setup
-```bash
-cd ReefGuard
-source ../venv/bin/activate  # Activate virtual environment
-./reset.sh && ./setup.sh     # Clean everything and setup fresh
-```
+## 🌏 Problem & Motivation
 
-### Manual Setup (All Platforms)
-```bash
-cd ReefGuard
-pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
-python manage.py loaddata core/fixtures/initial_data.json
-python manage.py createsuperuser  # Create admin account
-python manage.py runserver
-```
+Coral reefs are vital to our planet's health, yet they are under severe threat.
+**Biodiversity:** While covering less than 1% of the ocean floor, reefs support approximately 25% of all marine life.
+**Climate Balance:** They help balance Earth’s climate by producing oxygen and absorbing CO₂.
+**Economic & Coastal Value:** Reefs generate billions in fisheries and tourism and protect coastlines from storms.
+**The Crisis:** Over 50% of shallow corals have been lost in the past 30 years due to warming seas, pollution, overfishing, and cyclones.
 
-Then visit: **http://127.0.0.1:8000/**
+## 🚀 Key Features
 
+* **Reef Health Tracking:** Monitor vital statistics of reef ecosystems.
+* **Pollution Reporting:** A system for users to report and geolocate pollution incidents.
+* **Community Sightings:** Share and view coral sightings from divers and researchers.
+* **User Accounts:** Secure authentication for researchers and general users.
+* **Interactive Dashboard:** Data visualization for reef metrics.
+
+## 🛠️ Tech Stack
+
+* **Backend:** Django (Python)
+* **Frontend:** HTML, CSS, JavaScript
+* **Database:** SQLite (Development) / PostgreSQL (Production)
+
+## 👥 Meet the Team (Group 17)
+
+[cite_start]This project was developed by **Group 17**[cite: 2]:
+
+* **Aleena Ali Azeem**
+* **Arya Gupta**
+* **Gurleen Kaur**
+* **Mehakpreet Kaur**
+* **Simranpreet Kaur**
+  
 ## Features
 
 ### Core Functionality
